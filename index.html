@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Archivo C-137: explora, busca, filtra y guarda a los personajes de Rick and Morty "
+    />
+    <meta name="theme-color" content="#150A0D" />
+    <title>Archivo C-137</title>
+
+    <!-- Aplica el tema guardado (o el del sistema) antes de pintar para evitar parpadeos. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('archivo-c137:theme')
+          var dark =
+            stored !== null
+              ? stored === 'dark'
+              : !window.matchMedia('(prefers-color-scheme: light)').matches
+          document.documentElement.classList.toggle('dark', dark)
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+        } catch (e) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

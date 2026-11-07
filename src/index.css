@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* El tema se controla con la clase `dark` en <html> (ver index.html y useTheme). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Tokens semánticos. Cada tema redefine las mismas variables, de modo que los
+ * componentes usan `bg-surface`, `text-muted`, etc. sin duplicar clases `dark:`.
+ *
+ * Oscuro: terciopelo de sala de cine. Claro: gris rosado tipo programa de mano.
+ * Contrastes verificados contra el fondo de cada tema (texto normal >= 4.5:1).
+ */
+:root {
+  color-scheme: light;
+  --canvas: #f3edee;
+  --surface: #ffffff;
+  --surface-2: #e9dfe1;
+  --line: #d5c6c9;
+  --ink: #1d0f13;
+  --muted: #66565a;
+  --accent: #b01e2b;
+  --gold: #85600e;
+  --ok: #17724f;
+  --danger: #a8202d;
+  --ring: #85600e;
+  --grain: 0.035;
+  --glow: 0.1;
+}
+
+.dark {
+  color-scheme: dark;
+  --canvas: #150a0d;
+  --surface: #211116;
+  --surface-2: #2d181e;
+  --line: #46262e;
+  --ink: #f6efe9;
+  --muted: #b7a9ac;
+  --accent: #ff8c93;
+  --gold: #d6ad60;
+  --ok: #52c99b;
+  --danger: #ff8c93;
+  --ring: #d6ad60;
+  --grain: 0.06;
+  --glow: 0.3;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-gold: var(--gold);
+  --color-ok: var(--ok);
+  --color-danger: var(--danger);
+
+  /* Colores fijos (no cambian con el tema). */
+  --color-crimson: #c9222f;
+  --color-crimson-hover: #e02a39;
+  --color-gold-fill: #d6ad60;
+
+  --font-display: "League Gothic", "Arial Narrow", Impact, sans-serif;
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  --animate-pop: pop 0.18s ease-out both;
+  --animate-toast-in: toast-in 0.22s ease-out both;
+  --animate-fade-delayed: fade-in 0.25s ease-out 0.15s both;
+  --animate-drop: drop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes drop {
+    from {
+      opacity: 0;
+      transform: translateY(-28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Tipografía de cartel: condensada, en mayúsculas, interlineado compacto. */
+@utility title-card {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  --tw-leading: 0.95;
+  line-height: 0.95;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: #c9222f;
+    color: #ffffff;
+  }
+
+  /* Grano de película, muy sutil; no intercepta clics. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    opacity: var(--grain);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Un <dialog> modal no bloquea el scroll por sí solo. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Haz de proyector detrás del hero. */
+.projector {
+  background: radial-gradient(
+    55% 65% at 78% 28%,
+    rgb(201 34 47 / var(--glow)),
+    transparent 70%
+  );
+}
