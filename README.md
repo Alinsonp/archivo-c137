@@ -1,11 +1,10 @@
 # Archivo C-137
 
-Sitio de exploración de contenido con varias vistas (SPA) construido para el **Proyecto 01**. Permite descubrir personajes de *Rick and Morty* con datos reales de una API pública, buscarlos y filtrarlos en tiempo real, abrir su ficha, guardar favoritos y enviar un formulario de contacto validado.
 
-La identidad visual se inspira en el cine: títulos condensados de cartel, tarjetas con composición de póster y bloque de créditos, tema oscuro "terciopelo de sala" y tema claro "programa de mano", con carmesí y oro como acentos.
 
-- **Repositorio (GitHub):** _pendiente: añadir la URL pública tras subir el código_
-- **Aplicación (Vercel):** _pendiente: añadir la URL de producción tras el despliegue_
+- **Repositorio (GitHub):** https://github.com/Alinsonp/archivo-c137.git
+- **Aplicación (Vercel):** https://archivo-c137.vercel.app
+
 
 ## API utilizada
 
@@ -77,10 +76,6 @@ La API responde HTTP 404 cuando una búsqueda no tiene coincidencias. El servici
 
 Las confirmaciones usan `<dialog>` nativo con `useRef` y `showModal()` (componente `ConfirmDialog`). Gestiona Escape, clic en el fondo, foco inicial y devolución del foco.
 
-El trabajo exige incluir **un dark pattern intencional**. Está en el diálogo de «¿Quitar de favoritos?»: un **sesgo de jerarquía visual** donde «Quitar de favoritos» es grande, saturado y con sombra, mientras «Cancelar» es un enlace pequeño subrayado. Está documentado en un comentario al inicio de `src/components/ConfirmDialog.tsx` y se activa con la prop `biased`.
-
-Se mantuvo deliberadamente acotado: ambas opciones son visibles y honestas, Cancelar conserva contraste y un área táctil de 44 px, el foco inicial está en Cancelar para evitar confirmar por accidente, y no hay textos culpabilizadores ni otros trucos. El diálogo del formulario de contacto es neutral (ambos botones con el mismo peso). **Se incluye solo por el requisito pedagógico y no debe copiarse a un producto real.**
-
 ## Formulario de contacto
 
 Campos controlados: nombre (mínimo 2 caracteres), correo con formato válido y mensaje (mínimo 10). Las longitudes exactas son una decisión de implementación. El enunciado no exige un backend, así que **el envío es una demostración local** y la interfaz lo dice con claridad: no se envía nada a ningún servidor ni correo. `src/services/contactApi.ts` es el único punto a reemplazar si se conecta un servicio real; el formulario ya conserva los datos si el envío falla.
@@ -108,21 +103,8 @@ src/
   utils/        validation, format, storage, estilos compartidos
 ```
 
-## Cómo probar los estados manualmente
 
-- **Error con reintento:** en DevTools, pestaña Network, activa *Offline* y recarga `/explorar`; desactívalo y pulsa «Reintentar».
-- **Loading:** en Network, aplica *Slow 3G* y recarga.
-- **Sin coincidencias:** busca `zzzz`.
-- **ID inexistente:** abre `/explorar/999999`.
-- **Fetch individual:** abre un detalle y comprueba en Network la petición a `/api/character/:id`.
 
-## Despliegue en Vercel
 
-1. Sube el código a un repositorio **público** de GitHub.
-2. En Vercel, importa el repositorio. Se detecta Vite automáticamente (`npm run build`, salida `dist`).
-3. `vercel.json` ya incluye la reescritura a `index.html` para que las rutas del SPA funcionen al recargar.
-4. Entrega en el aula virtual los dos enlaces: el del repositorio y el de la aplicación desplegada (sin archivos `.zip`).
-
-## Créditos
 
 Datos e imágenes de [The Rick and Morty API](https://rickandmortyapi.com). Los personajes pertenecen a sus respectivos titulares; este es un proyecto académico sin fines comerciales.
